@@ -681,8 +681,8 @@ button[id$="ApplyBtn"], button[id$="UpdateBtn"], button[id$="ResetBtn"]{
         <div class="stat-title">บัญชีทั้งหมด</div>
 
         <div class="stat-breakdown">
-          <div class="stat-breakdown-row"><span>บัญชีลีด</span><span>0</span></div>
           <div class="stat-breakdown-row"><span>บัญชีสมาชิก</span><span>100</span></div>
+	  <div class="stat-breakdown-row"><span>บัญชีลูกค้า</span><span>55</span></div>
         </div>
       </div>
     </div>
@@ -809,6 +809,68 @@ button[id$="ApplyBtn"], button[id$="UpdateBtn"], button[id$="ResetBtn"]{
 </div>
 </div>
 </div>
+
+<div class="card" id="monthly-agent-revenue" style="max-width: 1400px; margin: 0 auto; margin-top: 15px;">
+  <h2 class="card-title">รายได้ของ Agent (รายเดือน)</h2>
+  <p style="font-size: 0.85rem; color: var(--muted-text); margin-top: -0.25rem; margin-bottom: 0.9rem;">
+    แสดงกราฟรายได้แบบรายเดือน พร้อมเลือกช่วงวันที่ และสรุป “ยอดรวมรายได้” ตามช่วงเวลาที่เลือก
+  </p>
+
+  <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-end; margin-bottom:1rem;">
+    <div style="min-width:220px;">
+      <div style="font-size:0.78rem; color:var(--muted-text); margin-bottom:0.35rem;">เลือกช่วงวันเริ่มต้น</div>
+      <input id="revStartDate" type="date" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" />
+    </div>
+    <div style="min-width:220px;">
+      <div style="font-size:0.78rem; color:var(--muted-text); margin-bottom:0.35rem;">เลือกช่วงวันสิ้นสุด</div>
+      <input id="revEndDate" type="date" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" />
+    </div>
+
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+      <button id="revApplyBtn" type="button" style="padding:0.6rem 1rem; border-radius:999px; border:none; background:var(--primary-color); color:#fff; font-weight:700; cursor:pointer; box-shadow: 0 4px 10px rgba(31,111,178,0.35);">
+        อัปเดต
+      </button>
+      <button id="revResetBtn" type="button" style="padding:0.6rem 1rem; border-radius:999px; border:1px solid #e5e7eb; background:#fff; color:#111827; font-weight:700; cursor:pointer;">
+        รีเซ็ต
+      </button>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem; margin-bottom: 1rem;">
+    <div style="padding: 1.05rem 1.15rem; background:#fff7ed; border-radius:12px; border:1px solid #fed7aa;">
+      <div style="font-size:0.85rem; font-weight:800; color:#7c2d12; margin-bottom:0.35rem;">
+        ยอดรวมรายได้ (ช่วงที่เลือก)
+      </div>
+      <div id="revTotalValue" style="font-size:1.7rem; font-weight:900; color:var(--secondary-color); line-height:1.15;">
+        ฿0
+      </div>
+      <div id="revRangeText" style="font-size:0.85rem; font-weight:700; color:#9a3412; margin-top:0.35rem;">
+        —
+      </div>
+    </div>
+
+    <div style="padding: 1.05rem 1.15rem; background:#eff6ff; border-radius:12px; border:1px solid #bfdbfe;">
+      <div style="font-size:0.85rem; font-weight:700; color:#0f172a; margin-bottom:0.35rem;">
+        เฉลี่ยต่อเดือน (ในช่วงที่เลือก)
+      </div>
+      <div id="revAvgValue" style="font-size:1.7rem; font-weight:900; color:var(--primary-color); line-height:1.15;">
+        ฿0
+      </div>
+      <div style="font-size:0.82rem; font-weight:600; color:#334155; margin-top:0.35rem;">
+        คำนวณจากเดือนที่มีอยู่ในช่วงวันที่
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="background:#ffffff; border:1px solid #e5edf8;">
+    <div class="chart-title">กราฟรายได้ของ Agent (รายเดือน)</div>
+    <div class="chart-subtitle">ตัดเป็นแท่งรายเดือนตามช่วงวันที่ที่เลือก (ตัวอย่างข้อมูลจำลอง)</div>
+    <div style="position:relative; min-height:300px;">
+      <canvas id="agentRevenueChart"></canvas>
+    </div>
+  </div>
+</div>
+
 <!-- End Agent performance -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -886,6 +948,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return obj;
       })();
+
+
+      // ========= Revenue (mock data, stable) =========
+      // revenueMonthly: { saleName: { 'YYYY-MM': revenueAmount } }
+      const revenueMonthly = (() => {
+        const obj = {};
+        sales.forEach((s) => (obj[s] = {}));
+        const years = [2024, 2025];
+        years.forEach((y) => {
+          for (let m = 1; m <= 12; m++) {
+            const mk = `${y}-${pad2(m)}`;
+            sales.forEach((s, si) => {
+              // Deterministic monthly revenue (THB) – no random
+              // roughly 180k..620k with seasonality
+              const wave = (Math.sin((m / 12) * Math.PI * 2) + 1) / 2; // 0..1
+              const base = 180000 + ((y - 2024) * 45000) + (si * 12000);
+              const seasonal = Math.round(240000 * wave);
+              const bump = ((y * 17 + m * 29 + si * 7) % 9) * 12000;
+              obj[s][mk] = base + seasonal + bump;
+            });
+          }
+        });
+        return obj;
+      })();
+
 
       // transactions for forklift-by-sale-by-model chart
       const forkliftModels = ['LHE','LPE','RRE'];
@@ -1188,7 +1275,118 @@ function renderChips(rows) {
         if (!endEl.value) endEl.value = toYMD(today);
       })();
 
-      // ========= Section 2: Model chart (month/year) =========
+      
+      // ========= Section 1.5: Agent Revenue (Monthly) =========
+      const revStartEl = document.getElementById('revStartDate');
+      const revEndEl = document.getElementById('revEndDate');
+      const revApplyBtn = document.getElementById('revApplyBtn');
+      const revResetBtn = document.getElementById('revResetBtn');
+      const revTotalEl = document.getElementById('revTotalValue');
+      const revAvgEl = document.getElementById('revAvgValue');
+      const revRangeTextEl = document.getElementById('revRangeText');
+      const revCanvas = document.getElementById('agentRevenueChart');
+
+      const fmtTHB = (n) => {
+        const v = Number(n || 0);
+        return '฿' + v.toLocaleString('th-TH');
+      };
+
+      // Defaults for revenue date range
+      (function initRevenueDateDefaults(){
+        if (!revStartEl || !revEndEl) return;
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        if (!revStartEl.value) revStartEl.value = `${yyyy}-01-01`;
+        if (!revEndEl.value) revEndEl.value = toYMD(today);
+      })();
+
+      let revenueChart = null;
+      if (revCanvas && hasChart) {
+        revenueChart = new Chart(revCanvas.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: [],
+            datasets: [
+              {
+                label: 'รายได้ (บาท)',
+                data: [],
+                borderWidth: 0,
+                backgroundColor: 'rgba(255, 122, 26, 0.88)'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'bottom' },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => ` ${fmtTHB(ctx.parsed.y)}`
+                }
+              }
+            },
+            scales: {
+              x: { grid: { display: false } },
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: (value) => {
+                    // shorten large numbers: 1000000 -> 1,000,000
+                    return Number(value).toLocaleString('th-TH');
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function updateRevenueChart() {
+        if (!revStartEl || !revEndEl) return;
+
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const defaultStart = `${yyyy}-01-01`;
+        const defaultEnd = toYMD(today);
+
+        const startVal = revStartEl.value || defaultStart;
+        const endVal = revEndEl.value || defaultEnd;
+
+        const keys = monthRangeKeys(startVal, endVal);
+        const map = (revenueMonthly && revenueMonthly[ACTIVE_AGENT]) ? revenueMonthly[ACTIVE_AGENT] : {};
+
+        const values = keys.map(k => Number(map[k] || 0));
+        const total = values.reduce((a, b) => a + b, 0);
+        const avg = keys.length ? Math.round(total / keys.length) : 0;
+
+        if (revTotalEl) revTotalEl.textContent = fmtTHB(total);
+        if (revAvgEl) revAvgEl.textContent = fmtTHB(avg);
+        if (revRangeTextEl) revRangeTextEl.textContent = keys.length ? `ช่วงวันที่: ${formatRange(startVal, endVal)}` : '—';
+
+        if (revenueChart) {
+          revenueChart.data.labels = keys;
+          revenueChart.data.datasets[0].data = values;
+          revenueChart.update();
+        }
+      }
+
+      if (revApplyBtn) revApplyBtn.addEventListener('click', updateRevenueChart);
+      if (revResetBtn) revResetBtn.addEventListener('click', () => {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        if (revStartEl) revStartEl.value = `${yyyy}-01-01`;
+        if (revEndEl) revEndEl.value = toYMD(today);
+        updateRevenueChart();
+      });
+      if (revStartEl) revStartEl.addEventListener('change', updateRevenueChart);
+      if (revEndEl) revEndEl.addEventListener('change', updateRevenueChart);
+
+      // First render
+      updateRevenueChart();
+
+
+// ========= Section 2: Model chart (month/year) =========
       const modelCanvas = document.getElementById('modelHoursChart');
       const modelStartEl = document.getElementById('modelStartDate');
       const modelEndEl = document.getElementById('modelEndDate'); 
