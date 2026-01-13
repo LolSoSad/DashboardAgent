@@ -659,218 +659,133 @@ button[id$="ApplyBtn"], button[id$="UpdateBtn"], button[id$="ResetBtn"]{
 .contract-item, .quotation-item{transition:transform .12s ease, box-shadow .12s ease;}
 .contract-item:hover, .quotation-item:hover{transform:translateY(-1px); box-shadow:0 10px 22px rgba(15,23,42,0.06);}
 
+
+
+      /* Top 3 cards layout */
+      .stats-grid.stats-grid-top-3 .dashboard-card.top-3-card { grid-column: span 4; }
+
+      @media (max-width: 1024px) {
+        .stats-grid.stats-grid-top-3 .dashboard-card.top-3-card { grid-column: span 6; }
+      }
+      @media (max-width: 768px) {
+        .stats-grid.stats-grid-top-3 .dashboard-card.top-3-card { grid-column: span 12; }
+      }
+
+      .mini-breakdown{
+        width: 70%;
+        max-width: 320px;
+        margin: 0.75rem auto 0;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .mini-row{
+        display:flex;
+        justify-content:space-between;
+        gap: 1rem;
+        padding: 0.12rem 0;
+      }
+      .mini-label{ color:#0f172a; }
+      .mini-value{ color:#0f172a; }
 </style>
 </head>
 <body class="h-full">
 <div class="main-wrapper">
 <div style="max-width: 1400px; margin: 0 auto; padding: 0 0.25rem;">
-
-    <!-- Stats Grid (Agent system overview) -->
-    <div class="stats-grid" style="margin-top:0.5rem;">
-      <!-- จำนวนรถที่พร้อมให้บริการ -->
-      <div class="dashboard-card text-center">
-        <div class="icon-bg"><img alt="forklift" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAWCAYAAAA8VJfMAAAD6klEQVR4nH2VTW9bRRSGn2M7jmPHceIkTppP0ZQFBIUUCbYs6K70D/ATkFjwb2DHih1iQWGFkAAJgZoSyYqoEkKbmjohIR9O6jix4zuHxZnre6+bMNJo7sydmXPe9z3njOizH0BSvqdBxL4BVAEFdeACG7VvTKwHfXN/tm/MoA4QwJmhiyYcbNkm1BvG5pksjM5Brmjrl03otiFXiF0adqIRTfSMfTjQlC2e7cKvXyhBh2RTY6A0A+9+JIxU4Ogp1DeU1QeCpG2bRNujb/ETW8zgnM3FexJcQecc3roPxYokaG7Ule2f4NGXyvsfC9kCNOrQbsGgR+ucBxFKo6+wkOnRqhLRiMKtZWHidkSLOghWhYFBZeM72PkNZlfM2P4mLLzj9/omGpt6lN5EChcGQywIQuPhmgsMgQjM3xXyY/Dke7u1vAg7a9pDQ7+2MT29zilD6ryxsIdG+/6pQn4UyvPQasDBNlSWhEYdmodJpP3xEGupCEkArmuIFI+ym2QhZGJiSXABHGwrI9NQKMOLqtrZfpTxlHEeaW8SLSaQ9vIyhro8b+PLfehewsJd+GcTup2Iyngk97UMGgBhMRAzArC/pbRO7Fh+FEqzPh4cDI9DNg8XZ9A6gbkV4a9flNNd75Am8zyhba84+EWn4K7MaPWbSIx8Ce59aikSohibg9M9KxAjFSjdguOaUp67Ad91mu49gfWvlK0ftYc2bK1TqH6ruCvTWQMYm4WrC2g37XzldWjswmUrksP1S+d8noZl8EVVef74Zvf+Xgd1SspL8fIQgi7UfleOaxZM7RZcnkJ28H9w9owS5edNLehC7Rqn/n1qvXLHavDZvlKcFEMFibylV5F80uaKvhymYHDY5i4w+trnseINpAcsmMZmzdnGngVVcclyd3bZO9qGTguax9DYVabuCIVyrPYWJ2zj8ASMTNMrfaMzcPgMzk/svwhM3k46kx6Awpg52TyEoxo0j5TTPSsikoLSNKQy/mkL3S9OCYgyMmUXv/ae0LmAnUfKUMkOqxoLAmSHYOW+4Bysf60EXchlIJ2F6kOlMA7jizC7LOSKMJAjrMGmqQoUJ+GDT4S9TUXUnrBuG+obsLAqvP3AnEul4c+flW4HMoPmSGYwov2Ne0I2Z86R1DJkL4Oqf9aAoRKMVITnj5X8JnQulG4bhictVy34YGZZqD609AopXflQGJ1+1Ui8+2onuvZ5FIkiVsr2/lBO6qbFzJtCeSER8qiazkc1RYDyojC+cA0yuC6KRdc+i10Ye1ODK5tnspExiC5D/QOgRnn/E0ZorK8MqotFb9xoqE/oQMJo7FtiTmrcqf53NMnAf9wUvnP34lXsAAAAAElFTkSuQmCC" style="width:30px; height:30px; object-fit:contain; display:block;"></div>
-        <div class="stat-value">45</div>
-        <div class="stat-title">จำนวนรถที่พร้อมให้บริการ</div>
-      </div>
-
-      <!-- บัญชีทั้งหมด -->
-      <div class="dashboard-card text-center">
-        <div class="icon-bg"><i class="fas fa-users"></i></div>
-        <div class="stat-value">155</div>
-        <div class="stat-title">บัญชีทั้งหมด</div>
-
-        <div class="stat-breakdown">
-          <div class="stat-breakdown-row"><span>บัญชีสมาชิก</span><span>100</span></div>
-	  <div class="stat-breakdown-row"><span>บัญชีลูกค้า</span><span>55</span></div>
-        </div>
-      </div>
-    </div>
-
-
+<!-- Stats Grid (Agent system overview) -->
+<div class="stats-grid-top-3 stats-grid" style="margin-top:0.5rem;">
+<div class="dashboard-card text-center top-3-card">
+<div class="icon-bg"><i class="fas fa-file-invoice"></i></div>
+<div class="stat-value" id="total-quotations">0</div>
+<div class="stat-title">จำนวนใบเสนอราคาทั้งหมด</div>
+<div class="stat-breakdown">
+<div class="stat-breakdown-row"><span>ใบเสนอราคาที่รออนุมัติ</span><span>0</span></div>
+<div class="stat-breakdown-row"><span>ใบเสนอราคาที่อนุมัติ</span><span>0</span></div>
+</div>
+</div>
+<!-- จำนวนรถที่พร้อมให้บริการ -->
+<div class="text-center dashboard-card top-3-card">
+<div class="icon-bg"><img alt="forklift" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAWCAYAAAA8VJfMAAAD6klEQVR4nH2VTW9bRRSGn2M7jmPHceIkTppP0ZQFBIUUCbYs6K70D/ATkFjwb2DHih1iQWGFkAAJgZoSyYqoEkKbmjohIR9O6jix4zuHxZnre6+bMNJo7sydmXPe9z3njOizH0BSvqdBxL4BVAEFdeACG7VvTKwHfXN/tm/MoA4QwJmhiyYcbNkm1BvG5pksjM5Brmjrl03otiFXiF0adqIRTfSMfTjQlC2e7cKvXyhBh2RTY6A0A+9+JIxU4Ogp1DeU1QeCpG2bRNujb/ETW8zgnM3FexJcQecc3roPxYokaG7Ule2f4NGXyvsfC9kCNOrQbsGgR+ucBxFKo6+wkOnRqhLRiMKtZWHidkSLOghWhYFBZeM72PkNZlfM2P4mLLzj9/omGpt6lN5EChcGQywIQuPhmgsMgQjM3xXyY/Dke7u1vAg7a9pDQ7+2MT29zilD6ryxsIdG+/6pQn4UyvPQasDBNlSWhEYdmodJpP3xEGupCEkArmuIFI+ym2QhZGJiSXABHGwrI9NQKMOLqtrZfpTxlHEeaW8SLSaQ9vIyhro8b+PLfehewsJd+GcTup2Iyngk97UMGgBhMRAzArC/pbRO7Fh+FEqzPh4cDI9DNg8XZ9A6gbkV4a9flNNd75Am8zyhba84+EWn4K7MaPWbSIx8Ce59aikSohibg9M9KxAjFSjdguOaUp67Ad91mu49gfWvlK0ftYc2bK1TqH6ruCvTWQMYm4WrC2g37XzldWjswmUrksP1S+d8noZl8EVVef74Zvf+Xgd1SspL8fIQgi7UfleOaxZM7RZcnkJ28H9w9owS5edNLehC7Rqn/n1qvXLHavDZvlKcFEMFibylV5F80uaKvhymYHDY5i4w+trnseINpAcsmMZmzdnGngVVcclyd3bZO9qGTguax9DYVabuCIVyrPYWJ2zj8ASMTNMrfaMzcPgMzk/svwhM3k46kx6Awpg52TyEoxo0j5TTPSsikoLSNKQy/mkL3S9OCYgyMmUXv/ae0LmAnUfKUMkOqxoLAmSHYOW+4Bysf60EXchlIJ2F6kOlMA7jizC7LOSKMJAjrMGmqQoUJ+GDT4S9TUXUnrBuG+obsLAqvP3AnEul4c+flW4HMoPmSGYwov2Ne0I2Z86R1DJkL4Oqf9aAoRKMVITnj5X8JnQulG4bhictVy34YGZZqD609AopXflQGJ1+1Ui8+2onuvZ5FIkiVsr2/lBO6qbFzJtCeSER8qiazkc1RYDyojC+cA0yuC6KRdc+i10Ye1ODK5tnspExiC5D/QOgRnn/E0ZorK8MqotFb9xoqE/oQMJo7FtiTmrcqf53NMnAf9wUvnP34lXsAAAAAElFTkSuQmCC" style="width:30px; height:30px; object-fit:contain; display:block;"/></div>
+<div class="stat-value">45</div>
+<div class="stat-title">จำนวนรถที่พร้อมให้บริการ</div>
+<div class="stat-breakdown">
+<div class="stat-breakdown-row"><span>LHE</span><span>0 คัน</span></div>
+<div class="stat-breakdown-row"><span>LPE</span><span>0 คัน</span></div>
+<div class="stat-breakdown-row"><span>RRE</span><span>0 คัน</span></div>
+</div>
+</div>
+<!-- บัญชีทั้งหมด -->
+<div class="text-center dashboard-card top-3-card">
+<div class="icon-bg"><i class="fas fa-users"></i></div>
+<div class="stat-value">155</div>
+<div class="stat-title">บัญชีทั้งหมด</div>
+<div class="stat-breakdown">
+<div class="stat-breakdown-row"><span>บัญชีสมาชิก</span><span>100</span></div>
+<div class="stat-breakdown-row"><span>บัญชีลูกค้า</span><span>55</span></div>
+</div>
+</div>
+</div>
 <!-- Stats Grid -->
-
 <!-- สรุปข้อมูลการเช่า : Compare Agent + Date Range -->
-<div class="card" id="monthly-sale-summary" style="max-width: 1400px; margin: 0 auto;">
-<h2 class="card-title">สรุปข้อมูลการเช่า (ใบเสนอราคาเทียบสัญญาบริการ)</h2>
-<p style="font-size: 0.85rem; color: var(--muted-text); margin-top: -0.25rem; margin-bottom: 0.9rem;">
-    เปรียบเทียบผลงานของ Agent ตามช่วงวันที่ที่เลือก (รวมจำนวนใบเสนอราคา และจำนวนสัญญาบริการ)
-  </p>
-<!-- Filters -->
-<div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-end; margin-bottom:1rem;">
-<div style="min-width:220px;">
-<div style="font-size:0.78rem; color:var(--muted-text); margin-bottom:0.35rem;">เลือกช่วงวันเริ่มต้น</div>
-<input id="saleStartDate" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" type="date"/>
-</div>
-<div style="min-width:220px;">
-<div style="font-size:0.78rem; color:var(--muted-text); margin-bottom:0.35rem;">เลือกช่วงวันสิ้นสุด</div>
-<input id="saleEndDate" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" type="date"/>
-</div>
-<div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-<button id="saleApplyBtn" style="padding:0.6rem 1rem; border-radius:999px; border:none; background:var(--primary-color); color:#fff; font-weight:700; cursor:pointer; box-shadow: 0 4px 10px rgba(31,111,178,0.35);" type="button">
-        อัปเดต
-      </button>
-<button id="saleResetBtn" style="padding:0.6rem 1rem; border-radius:999px; border:1px solid #e5e7eb; background:#fff; color:#111827; font-weight:700; cursor:pointer;" type="button">
-        รีเซ็ต
-      </button>
-</div>
-</div>
-<!-- Summary chips -->
-<div id="saleSummaryChips" style="display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 0.75rem; margin-bottom: 1rem;">
-</div>
-<!-- Chart -->
-<div class="chart-card" style="background:#ffffff; border:1px solid #e5edf8;">
-<div class="chart-title">กราฟเปรียบเทียบใบเสนอราคาและสัญญาบริการ (รายเดือน)</div>
-<div class="chart-subtitle">แสดงข้อมูลของ Agent 1 คน (ตัดเป็นแท่งรายเดือน) ในช่วงวันที่ที่เลือก</div>
-<div style="position:relative; min-height:260px;">
-<canvas id="saleCompareChart"></canvas>
-</div>
-</div>
-</div>
+
 </div>
 <!-- Charts -->
-<div class="card" id="monthly-forklift-summary" style="max-width: 1400px; margin: 0 auto; margin-top: 15px;">
-<h2 class="card-title">สรุปข้อมูลการเช่า (รถยกในใบเสนอราคาเทียบรถยกในสัญญาบริการ)</h2>
+
+
+<div class="card" id="monthly-agent-revenue" style="max-width: 1400px; margin: 0 auto; margin-top: 15px;">
+<h2 class="card-title">รายได้ของ Agent (รายเดือน)</h2>
 <p style="font-size: 0.85rem; color: var(--muted-text); margin-top: -0.25rem; margin-bottom: 0.9rem;">
-    เปรียบเทียบจำนวนรถยกตามช่วงวันที่ที่เลือก (รวมจำนวนรถยกในใบเสนอราคา และจำนวนรถยกในสัญญาบริการ) — อ้างอิงจาก “สรุปช่วงวันที่เลือก ”
+    แสดงกราฟรายได้แบบรายเดือน พร้อมเลือกช่วงวันที่ และสรุป “ยอดรวมรายได้” ตามช่วงเวลาที่เลือก
   </p>
-<!-- Filters (Forklift summary) -->
 <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-end; margin-bottom:1rem;">
 <div style="min-width:220px;">
 <div style="font-size:0.78rem; color:var(--muted-text); margin-bottom:0.35rem;">เลือกช่วงวันเริ่มต้น</div>
-<input id="forkliftStartDate" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" type="date"/>
+<input id="revStartDate" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" type="date"/>
 </div>
 <div style="min-width:220px;">
 <div style="font-size:0.78rem; color:var(--muted-text); margin-bottom:0.35rem;">เลือกช่วงวันสิ้นสุด</div>
-<input id="forkliftEndDate" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" type="date"/>
+<input id="revEndDate" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" type="date"/>
 </div>
-<div style="display:flex; gap:0.5rem; align-items:flex-end;">
-<button class="card-link-btn" id="forkliftUpdateBtn" type="button">อัปเดต</button>
-<button class="mdrop-action" id="forkliftResetBtn" style="padding:0.45rem 1.1rem; height:38px;" type="button">รีเซ็ต</button>
-</div>
-</div>
-<!-- Summary chips -->
-<div id="forkliftSummaryChips" style="display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:0.75rem; margin-bottom: 1rem;"></div>
-<!-- Chart: Compare forklift in quotation vs contract -->
-<div class="chart-card" style="background:#ffffff; border:1px solid #e5edf8; margin-top:1rem;">
-<div class="chart-title">กราฟเปรียบเทียบจำนวนรถยก (ใบเสนอราคา vs สัญญาบริการ) (รายเดือน)</div>
-<div class="chart-subtitle">ตัดเป็นแท่งรายเดือนตามช่วงวันที่ที่เลือก สำหรับ Agent 1 คน</div>
-<div style="position:relative; min-height:260px;">
-<div class="chart-canvas-wrap"><canvas id="forkliftCompareChart"></canvas></div>
-<div id="forkliftCompareFallback" style="margin-top:0.75rem;"></div>
-</div>
-</div>
-</div>
-<div class="card" style="max-width: 1400px; margin: 0 auto; margin-top: 15px;">
-<h2 class="card-title">กราฟสรุปรุ่นรถยกที่ทำสัญญา (Agent คนเดียว)</h2>
-<p style="font-size:0.8rem; color:var(--muted-text); margin-top:-0.2rem; margin-bottom:0.6rem;">
-            มองภาพรวม “รุ่นรถยกที่ทำสัญญา” และ “จำนวนรถยกที่ Agent ทำสัญญา” (ตัวอย่างข้อมูลจำลอง)</p>
-<div class="chart-grid">
-<!-- ซ้าย: กราฟสรุปจำนวนสัญญา -->
-<div class="chart-card">
-<div class="card-title" style="font-size:0.9rem;">กราฟสรุปรุ่นรถยกที่ทำสัญญา</div>
-<div class="chart-filters">
-<div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
-<div style="display:flex; flex-direction:column; gap:0.25rem;">
-<div style="font-size:0.75rem; color:var(--muted-text);">ช่วงวันเริ่ม (Start)</div>
-<input id="modelStartDate" style="padding:0.45rem 0.7rem; border-radius:0.6rem; border:1px solid #e5e7eb; width:170px; font-family:'Prompt',sans-serif;" type="date"/>
-</div>
-<div style="display:flex; flex-direction:column; gap:0.25rem;">
-<div style="font-size:0.75rem; color:var(--muted-text);">ช่วงวันสิ้นสุด (End)</div>
-<input id="modelEndDate" style="padding:0.45rem 0.7rem; border-radius:0.6rem; border:1px solid #e5e7eb; width:170px; font-family:'Prompt',sans-serif;" type="date"/>
-</div>
-</div>
-</div>
-<div style="position:relative; min-height:220px; margin-top: 55px;">
-<canvas id="modelHoursChart"></canvas>
-</div>
-</div>
-<!-- ขวา: กราฟสรุปการชำระเงินแพ็ค/ชม. (แท่งสีส้ม) -->
-<div class="chart-card">
-<div class="card-title" style="font-size:0.9rem;">กราฟจำนวนรถยกที่ Agent ทำสัญญา</div>
-<div class="chart-subtitle" style="margin-top:-0.35rem;">
-      แสดงจำนวนรถยกที่ทำสัญญา แยกตาม Agent (ตัวอย่างข้อมูลจำลอง) ตามช่วงวันที่และ Agent ที่เลือก
-    </div>
-<div class="chart-filters" style="margin-top: 8px;">
-<div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
-<div style="display:flex; flex-direction:column; gap:0.25rem;">
-<div style="font-size:0.75rem; color:var(--muted-text);">ช่วงวันเริ่ม (Start)</div>
-<input id="saleForkStartDate" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; width:170px; font-family:'Prompt',sans-serif;" type="date"/>
-</div>
-<div style="display:flex; flex-direction:column; gap:0.25rem;">
-<div style="font-size:0.75rem; color:var(--muted-text);">ช่วงวันสิ้นสุด (End)</div>
-<input id="saleForkEndDate" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; width:170px; font-family:'Prompt',sans-serif;" type="date"/>
-</div>
-</div>
-</div>
-<div style="position:relative; min-height:220px; margin-top: 30px;">
-<canvas id="saleForkliftChart"></canvas>
-</div>
-</div>
-</div>
-</div>
-
-<div class="card" id="monthly-agent-revenue" style="max-width: 1400px; margin: 0 auto; margin-top: 15px;">
-  <h2 class="card-title">รายได้ของ Agent (รายเดือน)</h2>
-  <p style="font-size: 0.85rem; color: var(--muted-text); margin-top: -0.25rem; margin-bottom: 0.9rem;">
-    แสดงกราฟรายได้แบบรายเดือน พร้อมเลือกช่วงวันที่ และสรุป “ยอดรวมรายได้” ตามช่วงเวลาที่เลือก
-  </p>
-
-  <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-end; margin-bottom:1rem;">
-    <div style="min-width:220px;">
-      <div style="font-size:0.78rem; color:var(--muted-text); margin-bottom:0.35rem;">เลือกช่วงวันเริ่มต้น</div>
-      <input id="revStartDate" type="date" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" />
-    </div>
-    <div style="min-width:220px;">
-      <div style="font-size:0.78rem; color:var(--muted-text); margin-bottom:0.35rem;">เลือกช่วงวันสิ้นสุด</div>
-      <input id="revEndDate" type="date" style="width:100%; padding:0.55rem 0.75rem; border-radius:10px; border:1px solid #e5e7eb; font-family:'Prompt',sans-serif;" />
-    </div>
-
-    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-      <button id="revApplyBtn" type="button" style="padding:0.6rem 1rem; border-radius:999px; border:none; background:var(--primary-color); color:#fff; font-weight:700; cursor:pointer; box-shadow: 0 4px 10px rgba(31,111,178,0.35);">
+<div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+<button id="revApplyBtn" style="padding:0.6rem 1rem; border-radius:999px; border:none; background:var(--primary-color); color:#fff; font-weight:700; cursor:pointer; box-shadow: 0 4px 10px rgba(31,111,178,0.35);" type="button">
         อัปเดต
       </button>
-      <button id="revResetBtn" type="button" style="padding:0.6rem 1rem; border-radius:999px; border:1px solid #e5e7eb; background:#fff; color:#111827; font-weight:700; cursor:pointer;">
+<button id="revResetBtn" style="padding:0.6rem 1rem; border-radius:999px; border:1px solid #e5e7eb; background:#fff; color:#111827; font-weight:700; cursor:pointer;" type="button">
         รีเซ็ต
       </button>
-    </div>
-  </div>
-
-  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem; margin-bottom: 1rem;">
-    <div style="padding: 1.05rem 1.15rem; background:#fff7ed; border-radius:12px; border:1px solid #fed7aa;">
-      <div style="font-size:0.85rem; font-weight:800; color:#7c2d12; margin-bottom:0.35rem;">
+</div>
+</div>
+<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem; margin-bottom: 1rem;">
+<div style="padding: 1.05rem 1.15rem; background:#fff7ed; border-radius:12px; border:1px solid #fed7aa;">
+<div style="font-size:0.85rem; font-weight:800; color:#7c2d12; margin-bottom:0.35rem;">
         ยอดรวมรายได้ (ช่วงที่เลือก)
       </div>
-      <div id="revTotalValue" style="font-size:1.7rem; font-weight:900; color:var(--secondary-color); line-height:1.15;">
+<div id="revTotalValue" style="font-size:1.7rem; font-weight:900; color:var(--secondary-color); line-height:1.15;">
         ฿0
       </div>
-      <div id="revRangeText" style="font-size:0.85rem; font-weight:700; color:#9a3412; margin-top:0.35rem;">
+<div id="revRangeText" style="font-size:0.85rem; font-weight:700; color:#9a3412; margin-top:0.35rem;">
         —
       </div>
-    </div>
-
-    <div style="padding: 1.05rem 1.15rem; background:#eff6ff; border-radius:12px; border:1px solid #bfdbfe;">
-      <div style="font-size:0.85rem; font-weight:700; color:#0f172a; margin-bottom:0.35rem;">
+</div>
+<div style="padding: 1.05rem 1.15rem; background:#eff6ff; border-radius:12px; border:1px solid #bfdbfe;">
+<div style="font-size:0.85rem; font-weight:700; color:#0f172a; margin-bottom:0.35rem;">
         เฉลี่ยต่อเดือน (ในช่วงที่เลือก)
       </div>
-      <div id="revAvgValue" style="font-size:1.7rem; font-weight:900; color:var(--primary-color); line-height:1.15;">
+<div id="revAvgValue" style="font-size:1.7rem; font-weight:900; color:var(--primary-color); line-height:1.15;">
         ฿0
       </div>
-      <div style="font-size:0.82rem; font-weight:600; color:#334155; margin-top:0.35rem;">
+<div style="font-size:0.82rem; font-weight:600; color:#334155; margin-top:0.35rem;">
         คำนวณจากเดือนที่มีอยู่ในช่วงวันที่
       </div>
-    </div>
-  </div>
-
-  <div class="chart-card" style="background:#ffffff; border:1px solid #e5edf8;">
-    <div class="chart-title">กราฟรายได้ของ Agent (รายเดือน)</div>
-    <div class="chart-subtitle">ตัดเป็นแท่งรายเดือนตามช่วงวันที่ที่เลือก (ตัวอย่างข้อมูลจำลอง)</div>
-    <div style="position:relative; min-height:300px;">
-      <canvas id="agentRevenueChart"></canvas>
-    </div>
-  </div>
 </div>
-
+</div>
+<div class="chart-card" style="background:#ffffff; border:1px solid #e5edf8;">
+<div class="chart-title">กราฟรายได้ของ Agent (รายเดือน)</div>
+<div class="chart-subtitle">ตัดเป็นแท่งรายเดือนตามช่วงวันที่ที่เลือก (ตัวอย่างข้อมูลจำลอง)</div>
+<div style="position:relative; min-height:300px;">
+<canvas id="agentRevenueChart"></canvas>
+</div>
+</div>
+</div>
 <!-- End Agent performance -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
